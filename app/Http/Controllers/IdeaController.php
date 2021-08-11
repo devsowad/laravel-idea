@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IdeaRequest;
 use App\Models\Idea;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -38,12 +40,20 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  IdeaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IdeaRequest $request)
     {
-        //
+        return Idea::create([
+            'title'        => $request->title,
+            'category_id'  => $request->category,
+            'status_id'    => 1,
+            'user_id'      => auth()->id(),
+            'description'  => $request->description,
+            'spam_reports' => 0,
+            'slug'         => Str::slug($request->title),
+        ]);
     }
 
     /**
@@ -70,16 +80,10 @@ class IdeaController extends Controller
             ->firstOrFail();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Idea  $idea
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Idea $idea)
+    public function update(IdeaRequest $request, Idea $idea)
     {
-        //
+        $idea->update($request->only('category_id', 'description', 'title'));
+        return $idea;
     }
 
     /**

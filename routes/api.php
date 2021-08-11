@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\VoteController;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('ideas', IdeaController::class);
 Route::apiResource('comments', CommentController::class);
+Route::apiResource('categories', CategoryController::class);
 
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('votes', VoteController::class);
