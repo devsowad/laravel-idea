@@ -70,4 +70,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Vote::class);
     }
+
+    public function isAdmin()
+    {
+        return $this->role == 'admin';
+    }
 }

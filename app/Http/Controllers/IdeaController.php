@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IdeaRequest;
 use App\Models\Idea;
 use App\Models\Status;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -37,12 +36,6 @@ class IdeaController extends Controller
             ->paginate(request()->limit);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  IdeaRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(IdeaRequest $request)
     {
         return Idea::create([
@@ -56,12 +49,6 @@ class IdeaController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Idea  $idea
-     * @return \Illuminate\Http\Response
-     */
     public function show($slug)
     {
         $query = QueryBuilder::for(Idea::class);
@@ -82,18 +69,14 @@ class IdeaController extends Controller
 
     public function update(IdeaRequest $request, Idea $idea)
     {
+        $this->authorize('update', $idea);
         $idea->update($request->only('category_id', 'description', 'title'));
         return $idea;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Idea  $idea
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Idea $idea)
     {
+        $this->authorize('delete', $idea);
         return $idea->delete();
     }
 
@@ -106,6 +89,8 @@ class IdeaController extends Controller
 
     public function notSpam()
     {
+        $this->authorize('notSpam', Idea::class);
+
         $idea = Idea::findOrFail(request()->id);
         $idea->update(['spam_reports' => 0]);
         return ['spam_reports' => $idea->spam_reports];
@@ -113,6 +98,8 @@ class IdeaController extends Controller
 
     public function updateStatus(Idea $idea)
     {
+        $this->authorize('updateStatus', Idea::class);
+
         $status = Status::getId(request()->status);
         $idea->update(['status_id' => $status]);
 

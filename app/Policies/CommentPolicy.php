@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Idea;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class IdeaPolicy
+class CommentPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class IdeaPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Idea  $idea
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Idea $idea)
+    public function view(User $user, Comment $comment)
     {
         //
     }
@@ -48,34 +48,34 @@ class IdeaPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Idea  $idea
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Idea $idea)
+    public function update(User $user, Comment $comment)
     {
-        return $user->id == $idea->user_id;
+        return $user->id == $comment->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Idea  $idea
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Idea $idea)
+    public function delete(User $user, Comment $comment)
     {
-        return $user->id == $idea->user_id || $user->isAdmin();
+        return $user->id == $comment->user_id || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Idea  $idea
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Idea $idea)
+    public function restore(User $user, Comment $comment)
     {
         //
     }
@@ -84,20 +84,15 @@ class IdeaPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Idea  $idea
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Idea $idea)
+    public function forceDelete(User $user, Comment $comment)
     {
         //
     }
 
     public function notSpam(User $user)
-    {
-        return $user->isAdmin();
-    }
-
-    public function updateStatus(User $user)
     {
         return $user->isAdmin();
     }
