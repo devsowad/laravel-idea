@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
-use App\Http\Requests\CommentCreateRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\CommentCreateRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -16,9 +17,10 @@ class CommentController extends Controller
     public function store(CommentCreateRequest $request)
     {
         $comment = Comment::create([
-            'idea_id' => $request->idea_id,
-            'body'    => $request->body,
-            'user_id' => auth()->id(),
+            'idea_id'      => $request->idea_id,
+            'body'         => $request->body,
+            'user_id'      => auth()->id(),
+            'spam_reports' => 0,
         ]);
 
         $comment->load('user:id,name');

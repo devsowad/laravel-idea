@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
-use App\Http\Requests\IdeaRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\v1\IdeaRequest;
 use App\Models\Idea;
 use App\Models\Status;
 use Illuminate\Support\Str;
