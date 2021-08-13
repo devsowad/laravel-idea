@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Queries\v1\CommentQuery;
 use App\Http\Requests\v1\CommentCreateRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function index()
+    public function index(CommentQuery $query)
     {
-        //
+        return $query->simplePaginate(request()->limit);
     }
 
     public function store(CommentCreateRequest $request)
@@ -44,18 +45,16 @@ class CommentController extends Controller
         return $comment->delete();
     }
 
-    public function markAsSpam()
+    public function markAsSpam(Comment $comment)
     {
-        $comment = Comment::findOrFail(request()->id);
         $comment->increment('spam_reports');
         return ['spam_reports' => $comment->spam_reports];
     }
 
-    public function notSpam()
+    public function notSpam(Comment $comment)
     {
         $this->authorize('notSpam', Comment::class);
 
-        $comment = Comment::findOrFail(request()->id);
         $comment->update(['spam_reports' => 0]);
         return ['spam_reports' => $comment->spam_reports];
     }
