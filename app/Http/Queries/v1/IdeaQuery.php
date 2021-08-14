@@ -22,6 +22,7 @@ class IdeaQuery extends QueryBuilder
                 'comments.body', 'comments.created_at', 'comments.id', 'comments.idea_id', 'comments.spam_reports',
                 'comments.user_id', 'comments.user.name', 'comments.user.id',
             ])
+            // ->allowedAppends('user.avatar_url')
             ->allowedIncludes([
                 'category', 'status', 'user', 'comments', 'comments.user', 'votes',
                 AllowedInclude::count('comments'),

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\LoginRequest;
 use App\Http\Requests\v1\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,7 @@ class AuthController extends Controller
 
     public function me(): JsonResponse
     {
-        $user = $this->guard()->user();
+        $user = new UserResource($this->guard()->user());
 
         return response()->json($user);
     }

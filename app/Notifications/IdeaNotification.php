@@ -67,8 +67,9 @@ class IdeaNotification extends Notification implements ShouldQueue
                 'title' => $this->idea->title,
             ],
             'user'  => [
-                'name' => $notifiable->name,
-                'id'   => $notifiable->id,
+                'name'       => $notifiable->name,
+                'id'         => $notifiable->id,
+                'avatar_url' => $notifiable->avatar_url,
             ],
         ];
     }

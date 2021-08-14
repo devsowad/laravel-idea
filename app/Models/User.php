@@ -41,6 +41,8 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['avatar_url'];
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -74,5 +76,10 @@ class User extends Authenticatable implements JWTSubject
     public function isAdmin()
     {
         return $this->role == 'admin';
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        return 'https://www.gravatar.com/avatar/0.png';
     }
 }

@@ -69,8 +69,9 @@ class CommentAddedNotification extends Notification implements ShouldQueue
                 'body' => $this->comment->body,
             ],
             'user'    => [
-                'name' => $notifiable->name,
-                'id'   => $notifiable->id,
+                'name'       => $notifiable->name,
+                'id'         => $notifiable->id,
+                'avatar_url' => $notifiable->avatar_url,
             ],
         ];
     }
