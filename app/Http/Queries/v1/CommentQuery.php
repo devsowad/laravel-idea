@@ -16,7 +16,7 @@ class CommentQuery extends QueryBuilder
             ->allowedFields([
                 'id', 'body', 'spam_reports', 'created_at', 'updated_at',
                 'user_id', 'user.id', 'user.name', 'user.email',
-                'idea_id',
+                'idea_id', 'idea.slug', 'idea.id',
             ])
             ->allowedIncludes([
                 'user', 'idea',
@@ -28,6 +28,7 @@ class CommentQuery extends QueryBuilder
             ->allowedFilters([
                 AllowedFilter::exact('spam_reports'),
                 AllowedFilter::exact('idea_id'),
+                AllowedFilter::exact('idea.slug'),
             ]);
     }
 }
