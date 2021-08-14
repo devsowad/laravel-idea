@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Events\IdeaDeletedEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Queries\v1\IdeaQuery;
 use App\Http\Requests\v1\IdeaRequest;
@@ -45,8 +46,9 @@ class IdeaController extends Controller
     {
         $this->authorize('delete', $idea);
 
+        IdeaDeletedEvent::dispatch($idea);
         $idea->delete();
-        return request()->json('Idea deleted');
+        return response()->json('Idea deleted');
     }
 
     public function markAsSpam(Idea $idea)

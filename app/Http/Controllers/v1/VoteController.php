@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Queries\v1\VoteQuery;
 use App\Models\Idea;
 use App\Models\Vote;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class VoteController extends Controller
 {
@@ -16,21 +15,9 @@ class VoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(VoteQuery $query)
     {
-        $query = QueryBuilder::for(Vote::class);
-
-        return $query
-            ->allowedFields([
-                'id', 'idea_id', 'user_id', 'created_at',
-            ])
-            ->allowedIncludes('idea', 'user')
-            ->allowedFilters([
-                AllowedFilter::exact('id'),
-                AllowedFilter::exact('idea_id'),
-                AllowedFilter::exact('user_id'),
-            ])
-            ->get();
+        return $query->get();
     }
 
     /**

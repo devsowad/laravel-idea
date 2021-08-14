@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
+use App\Events\CommentAdded;
 use App\Http\Controllers\Controller;
 use App\Http\Queries\v1\CommentQuery;
 use App\Http\Requests\v1\CommentCreateRequest;
@@ -25,6 +26,7 @@ class CommentController extends Controller
         ]);
 
         $comment->load('user:id,name');
+        CommentAdded::dispatch($comment);
         return $comment;
     }
 
