@@ -43,7 +43,7 @@ class Idea extends Model
             return Vote::where('user_id', $user->id)
                 ->where('idea_id', $this->id)
                 ->delete();
-        } catch (Exception) {
+        } catch (Exception $e) {
             //
         }
     }
@@ -60,7 +60,7 @@ class Idea extends Model
             } else {
                 return false;
             }
-        } catch (Exception) {
+        } catch (Exception $e) {
             //
         }
     }
